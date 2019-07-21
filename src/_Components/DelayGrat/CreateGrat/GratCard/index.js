@@ -82,15 +82,16 @@ class GratCard extends Component {
         <Card.Meta>Paul Bratslavsky <Image floated='right' size='mini' src='/images/avatar/large/steve.jpg' />
 </Card.Meta>
         <Card.Description>
-        <strong>Task: </strong>{task.taskName}best friends
+        <strong>Task: </strong>{task.taskName}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
           <Button basic color='green'>
-            Defer
+            Keep Going
           </Button>
-          <Button basic color='red' icon='star'>
+          <Button basic color='red'>
+            Did My Best
           </Button>
         </div>
       </Card.Content>

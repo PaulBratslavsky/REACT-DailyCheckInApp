@@ -11,12 +11,12 @@ class CreateGrat extends Component {
     time: new Date(),
     delayGratTasks: [],
     taskName: '',
-    startTime: 'test',
+    startTime: '',
   }
 
 
 
-  handleInputChange = (e) => this.setState({ taskName: e.target.value});
+  handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value});
 
   handleTaskCreate = (e) => {
     console.log('Task Create Button Clicked');
@@ -69,24 +69,34 @@ class CreateGrat extends Component {
     console.log(this.state.delayGratTasks, 'current task list');
 
     return (
-      <React.Fragment>
-      <Segment stacked>
-      <Form size='large'>
-          <Form.Input
-            onChange={this.handleInputChange}
-            value={this.state.taskName} 
-            fluid icon='clock outline' 
-            iconPosition='left' 
-            placeholder='Add your task...' />
+      
+    <React.Fragment>
+      { 
+        this.props.showCreateCard && 
+        <React.Fragment>
+          <div style={{position: 'fixed', width: '100%', border: 'none', padding: '1rem', background: '#ffffff', 
+        left: 0, bottom: 0, zIndex: 300, marginBottom: '0' }}stacked>
+            <Form  size='large'>
+                <Form.Input
+                  name='taskName'
+                  onChange={this.handleInputChange}
+                  value={this.state.taskName} 
+                  fluid icon='clock outline' 
+                  iconPosition='left' 
+                  placeholder='Add your task...' 
+                />
 
-          <Button onClick={this.handleTaskCreate} color='teal' fluid size='large'>
-            Add
-          </Button>
-      </Form>
-    </Segment>
-      <Card.Group>
+                <Button onClick={this.handleTaskCreate} color='orange' fluid size='large'>
+                  Add
+                </Button>
+            </Form>
+          </div>
+        </React.Fragment>
+      }
+
+      <Card.Group style={{marginTop: '65px'}}>
         { this.displayTaskList(this.state.delayGratTasks) }
-      </Card.Group>
+      </Card.Group> 
     </React.Fragment>
     );
   }

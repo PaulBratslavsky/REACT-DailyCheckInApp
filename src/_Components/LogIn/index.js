@@ -60,7 +60,7 @@ class Login extends Component {
       <React.Fragment>
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
+            <Header as='h2' color='orange' textAlign='center'>
               <Icon name='star' /> Log-in to your account
             </Header>
             <Form size='large'>
@@ -89,14 +89,14 @@ class Login extends Component {
                 <Button 
                   disabled={loggedIn} 
                   onClick={this.handleFormSubmit} 
-                  color='teal' 
+                  color='orange' 
                   fluid size='large'>
                   Login
                 </Button>
               </Segment>
             </Form>
             <Message>
-              Don't have an account? <Link to='/register'>Create account</Link>
+              Don't have an account? <a to='/register'>Coming Soon</a>
             </Message>
           </Grid.Column>
         </Grid>

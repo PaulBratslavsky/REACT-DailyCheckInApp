@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
+import { Button } from 'semantic-ui-react';
 
 import DelyaGrat from './_Components/DelayGrat';
 import Login from './_Components/LogIn';
@@ -55,7 +56,7 @@ class Root extends Component {
   render() {
     return (   
       <React.Fragment>
-        { this.state.loggedIn && <button onClick={this.logOutUser}>log out</button> }
+        { this.state.loggedIn && <Button color='red' style={{position: 'fixed', top: '13px', right: '2%', zIndex: 400}} onClick={this.logOutUser}>log out</Button> }
         <Switch>
           <Route exact path='/delaygrat' component={DelyaGrat} />
           <Route 
