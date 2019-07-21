@@ -28,13 +28,6 @@ class Login extends Component {
 
     if ( this.isFormValid(userEmail, userPassword) ) {
       this.loginUser(userEmail ,userPassword);
-
-      this.setState({
-        loggedIn: true,
-        userEmail: '',
-        userPassword: ''
-      });
-
     } else {
       console.log('form is not valid')
     }
@@ -48,7 +41,15 @@ class Login extends Component {
   // Login User
   loginUser = (email, password) => {
   fireDB.auth().signInWithEmailAndPassword(email, password)
-  .then( ( singnedInUser ) => console.log() )
+  .then( ( singnedInUser ) => {
+    this.setState({
+      loggedIn: true,
+      userEmail: '',
+      userPassword: ''
+    });
+    console.log(singnedInUser);
+
+  } )
   .catch( error => console.log(error) )
 }
 

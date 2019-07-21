@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import DelyaGrat from './_Components/DelayGrat';
-
+import Login from './_Components/LogIn';
+import Register from './_Components/Register';
 
 
 import { fireDB } from './_Firebase/firebase';
+import DelayGrat from './_Components/DelayGrat';
 
 
 class Root extends Component {
@@ -52,9 +54,27 @@ class Root extends Component {
 
   render() {
     return (   
-      <Switch>
-        <Route exact path='/' component={DelyaGrat} />
-      </Switch>  
+      <React.Fragment>
+        { this.state.loggedIn && <button onClick={this.logOutUser}>log out</button> }
+        <Switch>
+          <Route exact path='/delaygrat' component={DelyaGrat} />
+          <Route 
+          exact path='/' 
+          render={(props) => <Login {...props} 
+            user={this.state.user} 
+            loggedIn={this.state.loggedIn}
+            />} 
+        />
+        <Route path='/register' component={Register} />
+
+        <Route render={ (props) => ( this.state.user 
+            ? <DelayGrat {...props} /> 
+            : <Redirect to='/login' />
+        )} 
+        />
+        </Switch> 
+      </React.Fragment>
+       
     );
   }
   

@@ -80,7 +80,7 @@ class CreateGrat extends Component {
             placeholder='Add your task...' />
 
           <Button onClick={this.handleTaskCreate} color='teal' fluid size='large'>
-            Login
+            Add
           </Button>
       </Form>
     </Segment>
