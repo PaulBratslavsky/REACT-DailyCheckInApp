@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Segment, Button, Card } from 'semantic-ui-react';
+import { Form, Button, Card } from 'semantic-ui-react';
 import GratCard from './GratCard';
 
 
@@ -26,7 +26,6 @@ class CreateGrat extends Component {
       this.saveTaskToDatabase();
       console.log('Task Saved');
     }
-
 
   }
 
@@ -60,7 +59,7 @@ class CreateGrat extends Component {
 
   displayTaskList = (taskList) => ( taskList.map( (task, index) => {
     return(
-      <GratCard task={task} index={index} />
+      <GratCard task={task} key={index} displayName={this.props.displayName} displayPhoto={this.props.displayPhoto}/>
     );
   }) );
 
@@ -75,7 +74,7 @@ class CreateGrat extends Component {
         this.props.showCreateCard && 
         <React.Fragment>
           <div style={{position: 'fixed', width: '100%', border: 'none', padding: '1rem', background: '#ffffff', 
-        left: 0, bottom: 0, zIndex: 300, marginBottom: '0' }}stacked>
+        left: 0, bottom: 0, zIndex: 300, marginBottom: '0' }}>
             <Form  size='large'>
                 <Form.Input
                   name='taskName'

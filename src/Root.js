@@ -56,7 +56,6 @@ class Root extends Component {
   render() {
     return (   
       <React.Fragment>
-        { this.state.loggedIn && <Button color='red' style={{position: 'fixed', top: '13px', right: '2%', zIndex: 400}} onClick={this.logOutUser}>log out</Button> }
         <Switch>
           <Route exact path='/delaygrat' component={DelyaGrat} />
           <Route 
@@ -69,7 +68,7 @@ class Root extends Component {
         <Route path='/register' component={Register} />
 
         <Route render={ (props) => ( this.state.user 
-            ? <DelayGrat {...props} /> 
+            ? <DelayGrat {...props} user={this.state.user} logOutUser={this.logOutUser}/> 
             : <Redirect to='/login' />
         )} 
         />

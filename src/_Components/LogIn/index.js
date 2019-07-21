@@ -6,21 +6,14 @@ import { fireDB } from '../../_Firebase/firebase';
 class Login extends Component {
 
   state = {
-    user: null,
-    loggedIn: null,
+    user: this.props.user,
+    loggedIn: this.props.loggedIn,
     userEmail: '',
     userPassword: '',
     errors: []
   }
 
   handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-  componentDidMount() {
-    this.setState({
-      user: this.props.user,
-      loggedIn: this.props.loggedIn
-    })
-  }
 
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -96,7 +89,7 @@ class Login extends Component {
               </Segment>
             </Form>
             <Message>
-              Don't have an account? <a to='/register'>Coming Soon</a>
+              Don't have an account? <Link to='/register'>Register</Link>
             </Message>
           </Grid.Column>
         </Grid>

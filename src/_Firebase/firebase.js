@@ -2,13 +2,13 @@ import * as firebase from 'firebase';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCs9IXMQzHine0WM1wtFrTnd-oMWJnKJvI",
-  authDomain: "my-time-buddy.firebaseapp.com",
-  databaseURL: "https://my-time-buddy.firebaseio.com",
-  projectId: "my-time-buddy",
-  storageBucket: "my-time-buddy.appspot.com",
-  messagingSenderId: "245275941958",
-  appId: "1:245275941958:web:948e02286deb3496"
+  apiKey: "AIzaSyAouS86UqGvZiWEIX48N9X8XZz4I1vydzU",
+  authDomain: "my-time-buddy-d4f54.firebaseapp.com",
+  databaseURL: "https://my-time-buddy-d4f54.firebaseio.com",
+  projectId: "my-time-buddy-d4f54",
+  storageBucket: "",
+  messagingSenderId: "519572486542",
+  appId: "1:519572486542:web:9c4ef25804b95ec1"
 };
 
 // Initialize and Export Firebase

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
-import { Header, Icon } from 'semantic-ui-react';
+import { Header, Icon, Image, Menu, Button, Label } from 'semantic-ui-react';
 
 import CreateGrat from './CreateGrat';
 
  class DelayGrat extends Component {
 
   state = {
-    showCreateCard: false
+    showCreateCard: false,
+    user: this.props.user
   }
 
   showCreateCard = () => {
@@ -15,22 +16,44 @@ import CreateGrat from './CreateGrat';
     this.setState(prevState => ({
       showCreateCard: !prevState.showCreateCard
     }));
-
-    console.log('show card cliked');
-
   }
 
   render() {
+    console.log(this.state.user, 'NEED THIS DATA');
     return (
       <React.Fragment>
         <div style={{position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 300, background: '#e5e5e5'}}>
-          <Header style={{padding: '14px', margin: 0}} as='h2' color='orange' textAlign='left'>
-          { this.state.showCreateCard ? <Icon onClick={this.showCreateCard} color='orange' size='big' name='minus circle' /> : <Icon onClick={this.showCreateCard} color='orange' size='big' name='plus circle' />  }My Task Buddy 
+          
+          <Menu secondary>
+          <Menu.Menu position='left'>
+          <Menu.Item style={{padding: '0 1rem'}}>
+        { this.state.showCreateCard ? <Icon onClick={this.showCreateCard} color='orange' size='big' name='minus circle' /> : <Icon onClick={this.showCreateCard} color='orange' size='big' name='plus circle' />  }
+        <Header style={{padding: '14px', margin: 0}} as='h2' color='orange' textAlign='left'>
+          My Task Buddy 
           </Header>
+        </Menu.Item>
+        
+          </Menu.Menu>
+        
+          
+        <Menu.Menu position='right'>
+
+          <Menu.Item>
+            <Image style={{borderBottomLeftRadius: '5px', borderTopLeftRadius: '5px'}} src={this.props.user.photoURL} width='32.56px'/>
+
+            <Label style={{marginLeft: '-7px'}} onClick={this.props.logOutUser} size='huge' >
+              {this.props.user.displayName}
+              <Icon name='delete' />
+            </Label>
+
+          </Menu.Item>
+          
+        </Menu.Menu>
+      </Menu>
         </div>
         <Container>
           
-          <CreateGrat showCreateCard={this.state.showCreateCard} />
+          <CreateGrat showCreateCard={this.state.showCreateCard} displayName={this.props.user.displayName} displayPhoto={this.props.user.photoURL}/>
         </Container>
       </React.Fragment>
     );

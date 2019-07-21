@@ -79,7 +79,7 @@ class GratCard extends Component {
         <Progress percent={this.state.percent} indicating />
 
         </Card.Header>
-        <Card.Meta>Paul Bratslavsky <Image floated='right' size='mini' src='/images/avatar/large/steve.jpg' />
+        <Card.Meta>{this.props.displayName}<Image floated='right' size='mini' src={this.props.displayPhoto} avatar/>
 </Card.Meta>
         <Card.Description>
         <strong>Task: </strong>{task.taskName}
