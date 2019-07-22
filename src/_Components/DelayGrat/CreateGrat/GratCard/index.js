@@ -5,7 +5,6 @@ import { Progress, Button, Card, Image, Label } from 'semantic-ui-react';
 class GratCard extends Component {
   state = {
     currentTime: new Date(),
-    startTime: this.props.task.startTime,
     timePassed: 0,
     diff: 0,
     timer: {
@@ -18,7 +17,7 @@ class GratCard extends Component {
   };
 
   componentDidMount() {
-    let startTime = this.props.task.startTime;
+    let startTime = new Date(this.props.task.content.startTime);
     // SETS THE TICK FUNCTION TO FIRE EVERYSECOND
     this.timerID = setInterval(() => this.tick(startTime), 1000);
   }
@@ -62,11 +61,10 @@ class GratCard extends Component {
   
 
   render() {
-
+    
     const { task, index } = this.props;
-    const { days, hours, minutes, seconds } = this.state.timer;
-    console.log(seconds, 'seconds');
-    console.log(this.state.percent, 'percent');
+
+    const { days, hours, minutes } = this.state.timer;
     return (
       <Card key={index} centered>
       <Card.Content>
@@ -79,10 +77,10 @@ class GratCard extends Component {
         <Progress percent={this.state.percent} indicating />
 
         </Card.Header>
-        <Card.Meta>{this.props.displayName}<Image floated='right' size='mini' src={this.props.displayPhoto} avatar/>
+        <Card.Meta>{task.user.displayName}<Image floated='right' size='mini' src={task.user.displayPhoto} avatar/>
 </Card.Meta>
         <Card.Description>
-        <strong>Task: </strong>{task.taskName}
+        <strong>Task: </strong>{task.content.taskName}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

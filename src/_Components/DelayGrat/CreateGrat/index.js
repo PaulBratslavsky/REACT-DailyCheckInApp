@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Card } from 'semantic-ui-react';
 import GratCard from './GratCard';
+import { fireDB } from './../../../_Firebase/firebase';
 
 
 
@@ -8,12 +9,18 @@ import GratCard from './GratCard';
 class CreateGrat extends Component {
 
   state = {
+    userUID: this.props.userUID,
     time: new Date(),
     delayGratTasks: [],
     taskName: '',
     startTime: '',
+    taskRef: fireDB.database().ref('tasks'),
+    errors: [],
   }
 
+  componentDidMount() {
+    this.addTaskListener();
+  }
 
 
   handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value});
@@ -39,29 +46,72 @@ class CreateGrat extends Component {
     }
   }
 
-  saveTaskToDatabase = () => {
+  createTask = () => {
     const date = new Date();
+    const task = {
+      content: {
+        taskName: this.state.taskName,
+        startTime: date.toString(), 
+      },
+      user: {
+        displayName: this.props.displayName,
+        displayPhoto: this.props.displayPhoto,
+        userUID: this.props.userUID,
+      }
 
+    };
 
-
-    const taskToSave = {
-      taskName: this.state.taskName,
-      startTime: date
-    }
-
-    this.setState({
-      delayGratTasks: this.state.delayGratTasks.concat(taskToSave),
-      taskName: '',
-      startTime: '',
-    })
-
+    return task;
   }
 
-  displayTaskList = (taskList) => ( taskList.map( (task, index) => {
+  saveTaskToDatabase = () => {
+    
+
+    this.state.taskRef
+      .child(this.props.userUID)
+      .push()
+      .set(this.createTask())
+      .then( () => {
+        this.setState({
+          // delayGratTasks: this.state.delayGratTasks.concat(this.createTask()),
+          taskName: '',
+          startTime: '',
+          loading: false, 
+          errors: []
+        })
+
+      })
+      .catch( (errors) => { 
+        console.log(errors); 
+        this.setState({ 
+          loading: false,
+          errors: this.state.concat(errors) 
+        });
+      }); 
+  }
+
+  addTaskListener = () => {
+    let loadedMessages = [];
+
+    this.state.taskRef.child(this.props.userUID).on('child_added', (snap) => {
+      loadedMessages.push(snap.val());
+
+      this.setState({
+        delayGratTasks: loadedMessages,
+      });
+
+      console.log(loadedMessages, 'from add listener messages')
+    })
+  }
+  
+
+  displayTaskList = (taskList) => ( taskList.length > 0 && taskList.map( (task, index) => {
     return(
-      <GratCard task={task} key={index} displayName={this.props.displayName} displayPhoto={this.props.displayPhoto}/>
+      <GratCard task={task} key={index} />
     );
-  }) );
+  }));
+
+  
 
   render() {   
     console.log(this.state.taskName, 'single task name'); 

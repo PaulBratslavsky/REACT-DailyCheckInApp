@@ -53,7 +53,7 @@ import CreateGrat from './CreateGrat';
         </div>
         <Container>
           
-          <CreateGrat showCreateCard={this.state.showCreateCard} displayName={this.props.user.displayName} displayPhoto={this.props.user.photoURL}/>
+          <CreateGrat showCreateCard={this.state.showCreateCard} displayName={this.props.user.displayName} displayPhoto={this.props.user.photoURL} userUID={this.props.user.uid}/>
         </Container>
       </React.Fragment>
     );
