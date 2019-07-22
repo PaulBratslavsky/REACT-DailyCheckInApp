@@ -4,7 +4,7 @@ import { Progress, Button, Card, Image, Label } from 'semantic-ui-react';
 
 class GratCard extends Component {
   state = {
-    // currentTime: new Date(),
+    currentTime: new Date(),
     timer: {
       days: 0,
       hours: 0,
