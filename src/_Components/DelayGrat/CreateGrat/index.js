@@ -9,11 +9,9 @@ import { fireDB } from './../../../_Firebase/firebase';
 class CreateGrat extends Component {
 
   state = {
-    userUID: this.props.userUID,
-    time: new Date(),
     delayGratTasks: [],
     taskName: '',
-    startTime: '',
+    startTime: new Date,
     taskRef: fireDB.database().ref('tasks'),
     errors: [],
   }
@@ -26,7 +24,7 @@ class CreateGrat extends Component {
   handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value});
 
   handleTaskCreate = (e) => {
-    console.log('Task Create Button Clicked');
+
     if (this.isInputEmpty(this.state.taskName)) {
       console.log('Task Not Saved');
     } else {
@@ -47,11 +45,10 @@ class CreateGrat extends Component {
   }
 
   createTask = () => {
-    const date = new Date();
     const task = {
       content: {
         taskName: this.state.taskName,
-        startTime: date.toString(), 
+        startTime: this.state.startTime.toString(), 
       },
       user: {
         displayName: this.props.displayName,
@@ -100,7 +97,6 @@ class CreateGrat extends Component {
         delayGratTasks: loadedMessages,
       });
 
-      console.log(loadedMessages, 'from add listener messages')
     })
   }
   
@@ -111,11 +107,8 @@ class CreateGrat extends Component {
     );
   }));
 
-  
 
   render() {   
-    console.log(this.state.taskName, 'single task name'); 
-    console.log(this.state.delayGratTasks, 'current task list');
 
     return (
       

@@ -4,9 +4,7 @@ import { Progress, Button, Card, Image, Label } from 'semantic-ui-react';
 
 class GratCard extends Component {
   state = {
-    currentTime: new Date(),
-    timePassed: 0,
-    diff: 0,
+    // currentTime: new Date(),
     timer: {
       days: 0,
       hours: 0,
@@ -89,7 +87,7 @@ class GratCard extends Component {
             Keep Going
           </Button>
           <Button basic color='red'>
-            Did My Best
+            Delete
           </Button>
         </div>
       </Card.Content>
