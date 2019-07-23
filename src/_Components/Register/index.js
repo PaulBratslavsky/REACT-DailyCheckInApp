@@ -103,7 +103,7 @@ saveUser = ( createdUser ) => {
     return (
       <React.Fragment>
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450 }}>
+          <Grid.Column style={{ maxWidth: 450, margin: '2%' }}>
             <Header as='h2' color='red' textAlign='center'>
               <Icon name='star' /> Create your account
             </Header>

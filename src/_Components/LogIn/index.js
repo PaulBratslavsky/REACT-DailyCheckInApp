@@ -52,7 +52,7 @@ class Login extends Component {
     return (
       <React.Fragment>
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450 }}>
+          <Grid.Column style={{ maxWidth: 450, margin: '2%' }}>
             <Header as='h2' color='orange' textAlign='center'>
               <Icon name='star' /> Log-in to your account
             </Header>
