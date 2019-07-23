@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Progress, Button, Card, Image, Label } from 'semantic-ui-react';
+import { fireDB } from './../../../../_Firebase/firebase';
 
 
 class GratCard extends Component {
@@ -40,7 +41,7 @@ class GratCard extends Component {
     diff = diff-(minutes*60);
     let seconds = diff;
 
-    const percentSeconds = 100 / 59;
+    const percentSeconds = 100 / 60;
     const percent =  (this.state.timer.seconds) * percentSeconds;
 
     this.setState({
@@ -61,8 +62,9 @@ class GratCard extends Component {
   render() {
     
     const { task, index } = this.props;
-
     const { days, hours, minutes } = this.state.timer;
+
+
     return (
       <Card key={index} centered>
       <Card.Content>
@@ -86,7 +88,7 @@ class GratCard extends Component {
           <Button basic color='green'>
             Keep Going
           </Button>
-          <Button basic color='red'>
+          <Button onClick={ () => this.props.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) } basic color='red'>
             Delete
           </Button>
         </div>

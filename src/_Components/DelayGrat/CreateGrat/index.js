@@ -16,6 +16,7 @@ class CreateGrat extends Component {
   }
 
   componentDidMount() {
+    // this.removeTaskListener();
     this.addTaskListener();
   }
 
@@ -44,11 +45,17 @@ class CreateGrat extends Component {
   }
 
   createTask = () => {
+
     const startTime = new Date();
+    const newPostRef = this.state.taskRef.push();
+    const taskId = newPostRef.key;
+
+
     const task = {
       content: {
         taskName: this.state.taskName,
         startTime: startTime.toString(), 
+        taskUID: taskId,
       },
       user: {
         displayName: this.props.displayName,
@@ -61,8 +68,18 @@ class CreateGrat extends Component {
     return task;
   }
 
+  updateStateOnRemove = (itemRemoved) => {
+    const oldArray = this.state.delayGratTasks;
+
+    const newArray = oldArray.filter( tasks => {
+      if ( tasks.content.taskUID !== itemRemoved ) {
+        return tasks;
+      }
+    })
+    console.log(newArray, 'FROM UPDATE ON REMOVE')
+    this.setState({delayGratTasks: newArray })
+  }
   saveTaskToDatabase = () => {
-    
 
     this.state.taskRef
       .child(this.props.userUID)
@@ -70,7 +87,7 @@ class CreateGrat extends Component {
       .set(this.createTask())
       .then( () => {
         this.setState({
-          // delayGratTasks: this.state.delayGratTasks.concat(this.createTask()),
+          delayGratTasks: this.state.delayGratTasks.concat(this.createTask()),
           taskName: '',
           startTime: '',
           loading: false, 
@@ -87,24 +104,65 @@ class CreateGrat extends Component {
       }); 
   }
 
+  deleteTaskFromDatabase = (userId, taskId) => {
+
+    const listRef = this.state.taskRef.child(userId);
+
+    listRef.once("value", function(snapshot) {
+      snapshot.forEach(function(itemSnapshot) {
+          if ( itemSnapshot.val().content.taskUID === taskId ) {
+            return itemSnapshot.ref.remove();
+          }
+      }); 
+    });
+
+    this.updateStateOnRemove(taskId);
+    console.log('Task Removed');
+    
+  }
+  
   addTaskListener = () => {
     let loadedMessages = [];
 
     this.state.taskRef.child(this.props.userUID).on('child_added', (snap) => {
+      
+      loadedMessages.push(snap.val());
+      
+      if ( loadedMessages.length > 0 ) {
+        this.setState({
+          delayGratTasks: loadedMessages,
+        });
+      }
+      
+
+      console.log(loadedMessages, 'from add listener messages')
+    })
+  }
+/*
+  removeTaskListener = () => {
+    let loadedMessages = [];
+
+    this.state.taskRef.child(this.props.userUID).on('child_removed', (snap) => {
       loadedMessages.push(snap.val());
 
       this.setState({
         delayGratTasks: loadedMessages,
       });
 
-      console.log(loadedMessages, 'from add listener messages')
+      console.log(loadedMessages, 'from remove listener messages')
     })
   }
   
-
+*/
   displayTaskList = (taskList) => ( taskList.length > 0 && taskList.map( (task, index) => {
     return(
-      <GratCard task={task} key={index} />
+      <GratCard 
+
+        task={task} 
+        key={index} 
+        deleteTaskFromDatabase={this.deleteTaskFromDatabase}
+    
+      />
     );
   }));
 
