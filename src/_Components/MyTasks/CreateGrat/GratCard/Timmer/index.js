@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Progress, Button, Card, Image, Label } from 'semantic-ui-react';
-import { fireDB } from './../../../../_Firebase/firebase';
+import { Progress, Card, Label } from 'semantic-ui-react';
 
 
-class GratCard extends Component {
+class Timmer extends Component {
+
   state = {
     currentTime: new Date(),
     timer: {
@@ -16,7 +16,7 @@ class GratCard extends Component {
   };
 
   componentDidMount() {
-    let startTime = new Date(this.props.task.content.startTime);
+    let startTime = new Date(this.props.startTime);
     // SETS THE TICK FUNCTION TO FIRE EVERYSECOND
     this.timerID = setInterval(() => this.tick(startTime), 1000);
   }
@@ -57,17 +57,14 @@ class GratCard extends Component {
     this.setState({timePassed});
     
   }
-  
 
   render() {
     
-    const { task, index } = this.props;
     const { days, hours, minutes } = this.state.timer;
 
 
     return (
-      <Card key={index} centered>
-      <Card.Content>
+      <React.Fragment>
         <Card.Header>
         <Label.Group>
         <Label size='medium' color='red'> Days <Label.Detail>{days}</Label.Detail></Label>
@@ -77,25 +74,10 @@ class GratCard extends Component {
         <Progress percent={this.state.percent} indicating />
 
         </Card.Header>
-        <Card.Meta>{task.user.displayName}<Image floated='right' size='mini' src={task.user.displayPhoto} avatar/>
-</Card.Meta>
-        <Card.Description>
-        <strong>Task: </strong>{task.content.taskName}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <div className='ui two buttons'>
-          <Button basic color='green'>
-            Keep Going
-          </Button>
-          <Button onClick={ () => this.props.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) } basic color='red'>
-            Delete
-          </Button>
-        </div>
-      </Card.Content>
-    </Card>
-    );
+
+      </React.Fragment>
+    )
   }
 }
 
-export default GratCard;
+export default Timmer;

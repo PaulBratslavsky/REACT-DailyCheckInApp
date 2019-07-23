@@ -4,7 +4,7 @@ import { Header, Icon, Image, Menu, Button, Label } from 'semantic-ui-react';
 
 import CreateGrat from './CreateGrat';
 
- class DelayGrat extends Component {
+ class MyTasks extends Component {
 
   state = {
     showCreateCard: false,
@@ -41,7 +41,7 @@ import CreateGrat from './CreateGrat';
           <Menu.Item>
             <Image style={{borderBottomLeftRadius: '5px', borderTopLeftRadius: '5px'}} src={this.props.user.photoURL} width='32.56px'/>
 
-            <Label style={{marginLeft: '-7px'}} onClick={this.props.logOutUser} size='huge' >
+            <Label style={{marginLeft: '-7px', background: '#22ba46'}} onClick={this.props.logOutUser} size='huge' >
               {this.props.user.displayName}
               <Icon name='delete' />
             </Label>
@@ -59,4 +59,4 @@ import CreateGrat from './CreateGrat';
     );
   }
 }
-export default DelayGrat;
+export default MyTasks;

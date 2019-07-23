@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
-import { Button } from 'semantic-ui-react';
 
-import DelyaGrat from './_Components/DelayGrat';
 import Login from './_Components/LogIn';
 import Register from './_Components/Register';
 
 
 import { fireDB } from './_Firebase/firebase';
-import DelayGrat from './_Components/DelayGrat';
+import MyTasks from './_Components/MyTasks';
 
 
 class Root extends Component {
@@ -57,7 +55,7 @@ class Root extends Component {
     return (   
       <React.Fragment>
         <Switch>
-          <Route exact path='/delaygrat' component={DelyaGrat} />
+          <Route exact path='/mytasks' component={MyTasks} />
           <Route 
           exact path='/' 
           render={(props) => <Login {...props} 
@@ -68,7 +66,7 @@ class Root extends Component {
         <Route path='/register' component={Register} />
 
         <Route render={ (props) => ( this.state.user 
-            ? <DelayGrat {...props} user={this.state.user} logOutUser={this.logOutUser}/> 
+            ? <MyTasks {...props} user={this.state.user} logOutUser={this.logOutUser}/> 
             : <Redirect to='/login' />
         )} 
         />

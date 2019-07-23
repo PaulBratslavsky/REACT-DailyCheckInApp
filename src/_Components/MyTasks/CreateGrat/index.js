@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Card } from 'semantic-ui-react';
 import GratCard from './GratCard';
-import { fireDB } from './../../../_Firebase/firebase';
+import { fireDB } from '../../../_Firebase/firebase';
 
 
 class CreateGrat extends Component {
@@ -83,6 +83,7 @@ class CreateGrat extends Component {
         taskName: this.state.taskName,
         startTime: startTime.toString(), 
         taskUID: taskId,
+        completed: false
       },
       user: {
         displayName: this.props.displayName,
@@ -148,6 +149,21 @@ class CreateGrat extends Component {
     
   }
 
+  completeTask = (userId, taskId) => {
+    console.log(`Task with ID ${taskId} was completed`);
+    const stopTime = new Date();
+
+    const listRef = this.state.taskRef.child(userId);
+
+    listRef.once("value", function(snapshot) {
+      snapshot.forEach(function(itemSnapshot) {
+          if ( itemSnapshot.val().content.taskUID === taskId ) {
+            return itemSnapshot.ref.child('content').update({completed: true, stopTime: stopTime.toString()});
+          }
+      }); 
+    });
+  }
+
   displayTaskList = (taskList) => ( taskList.length > 0 && taskList.map( (task, index) => {
     console.log(task, 'from display tasklist')
     
@@ -157,6 +173,7 @@ class CreateGrat extends Component {
         task={task} 
         key={index} 
         deleteTaskFromDatabase={this.deleteTaskFromDatabase}
+        completeTask={this.completeTask}
     
       /> 
     );
