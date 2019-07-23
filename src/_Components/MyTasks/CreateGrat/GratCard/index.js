@@ -65,11 +65,11 @@ class GratCard extends Component {
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
-        { !task.content.completed &&  <Button onClick = { () => {this.props.completeTask(task.user.userUID, task.content.taskUID)} } basic color='green'>
+        { !task.content.completed &&  <Button onClick = { () => {this.props.completeTask(task.user.userUID, task.content.taskUID)} }  color='green'>
             Complete
           </Button>} 
           
-          <Button onClick={ () => this.props.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) } basic color='red'>
+          <Button onClick={ () => this.props.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) }  color='red'>
             Delete
           </Button>
         </div>
