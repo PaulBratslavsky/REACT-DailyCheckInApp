@@ -39,7 +39,7 @@ import CreateGrat from './CreateGrat';
         <Menu.Menu position='right'>
 
           <Menu.Item>
-            <Image style={{borderBottomLeftRadius: '5px', borderTopLeftRadius: '5px'}} src={this.props.user.photoURL} width='32.56px'/>
+            <Image style={{borderBottomLeftRadius: '5px', borderTopLeftRadius: '5px'}} src={this.props.user.photoURL} width='32px'/>
 
             <Label style={{marginLeft: '-7px', background: '#22ba46'}} onClick={this.props.logOutUser} size='huge' >
               {this.props.user.displayName}
