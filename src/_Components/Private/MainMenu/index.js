@@ -8,24 +8,19 @@ import { Header, Icon, Image, Menu, Label } from 'semantic-ui-react';
 
 //IMPORT REDUX
 import { connect } from 'react-redux';
+
+import { toggleAddCard } from './../../../_Redux/A&R/combine';
  
 
  class MainMenu extends Component {
 
-
   state = {
-    showCreateCard: false,
-    displayName: 'somename',
-    photoURL: 'someurl',
+    displayName: localStorage.getItem('userName'),
+    photoURL: localStorage.getItem('photoUrl'),
   }
-
-  
-
   
   showCreateCard = () => {
-    this.setState(prevState => ({
-      showCreateCard: !prevState.showCreateCard
-    }));
+    this.props.toggleAddCard();
   }
 
   logOutUser = () => {
@@ -34,25 +29,22 @@ import { connect } from 'react-redux';
   }
 
   render() {
-    
+    console.log(this.props.showCreateCard);
     return (
-      <React.Fragment>
-        <div style={{position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 300, background: '#e5e5e5'}}>
+      <div style={{position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 300, background: '#e5e5e5'}}>
           
-          <Menu secondary style={{padding: '0 2%'}}>
-          <Menu.Menu position='left'>
+      <Menu secondary style={{padding: '0 2%'}}>
+        
+        <Menu.Menu position='left'>
           <Menu.Item style={{padding: 0}}>
-        { this.state.showCreateCard ? <Icon onClick={this.showCreateCard} color='orange' size='big' name='minus circle' /> : <Icon onClick={this.showCreateCard} color='orange' size='big' name='plus circle' />  }
-        <Header style={{padding: '14px 0', margin: 0}} as='h2' color='orange' textAlign='left'>
+        { this.props.showCreateCard ? <Icon onClick={this.showCreateCard} color='orange' size='big' name='minus circle' /> : <Icon onClick={this.showCreateCard} color='orange' size='big' name='plus circle' />  }
+          <Header style={{padding: '14px 0', margin: 0}} as='h2' color='orange' textAlign='left'>
           MTB
           </Header>
-        </Menu.Item>
+          </Menu.Item>
+        </Menu.Menu>
         
-          </Menu.Menu>
-        
-          
         <Menu.Menu position='right'>
-
           <Menu.Item>
             <Image style={{borderBottomLeftRadius: '5px', borderTopLeftRadius: '5px'}} src={this.state.photoURL} width='32px'/>
 
@@ -60,21 +52,19 @@ import { connect } from 'react-redux';
               {this.state.displayName}
               <Icon name='delete' />
             </Label>
-
           </Menu.Item>
-          
         </Menu.Menu>
       </Menu>
-        </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
 const  mapStateToProps = (state) => {
   return {
-    user: state.user 
+    user: state.user, 
+    showCreateCard: state.menu.showCreateCard
   }
 }
 
-export default connect(mapStateToProps)(MainMenu);
+export default connect(mapStateToProps, { toggleAddCard })(MainMenu);

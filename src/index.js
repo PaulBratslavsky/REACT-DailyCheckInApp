@@ -4,15 +4,16 @@ import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 
 import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import userReducer from './_Redux/Reducers/userReducer';
+import rootReducer from './_Redux/A&R/combine';
 
 import './index.css';
 
 import Root from './Root';
 
 
-const store = createStore(userReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 const RootWithAuth = withRouter(connect()(Root));
 
 
