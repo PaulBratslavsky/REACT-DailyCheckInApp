@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 import { fireDB } from './_Firebase/firebase';
 import Private from './_Components/Private';
 
-import { setUser, clearUser } from './_Redux/A&R/combine';
+import { setUser, clearUser } from './_Redux/Reducers/userReducer';
 
 class Root extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     this.authListener();
   }
 
@@ -24,6 +24,7 @@ class Root extends Component {
         this.props.setUser(user);
         localStorage.setItem('userName', user.displayName);
         localStorage.setItem('photoUrl', user.photoURL);
+        localStorage.setItem('userUid', user.uid);
         this.props.history.push('/private');    
 
 
@@ -32,6 +33,7 @@ class Root extends Component {
         this.props.clearUser();
         localStorage.removeItem('userName');
         localStorage.removeItem('photoUrl');
+        localStorage.removeItem('userUid')
         this.props.history.push('/');  
       }
     });
@@ -47,7 +49,7 @@ class Root extends Component {
         <Switch>
           <Route exact path='/' component={Login} />
           <Route path='/register' component={Register} />
-          <Route path='/private' component={Private} />
+          <Route path='/private' component={Private} /> 
         </Switch> 
       </React.Fragment>
     );

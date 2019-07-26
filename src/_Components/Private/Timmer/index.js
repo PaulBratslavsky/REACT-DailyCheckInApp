@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Progress, Card, Label } from 'semantic-ui-react';
 
-
 class Timmer extends Component {
 
   state = {

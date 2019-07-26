@@ -6,8 +6,6 @@ import { fireDB } from '../../_Firebase/firebase';
 class Login extends Component {
 
   state = {
-    user: this.props.user,
-    loggedIn: this.props.loggedIn,
     userEmail: '',
     userPassword: '',
     errors: []
@@ -47,53 +45,47 @@ class Login extends Component {
 }
 
   render() {
-    const { loggedIn } = this.state;
     console.log(this.state, 'from state');
     return (
-      <React.Fragment>
-        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 450, margin: '2%' }}>
-            <Header as='h2' color='orange' textAlign='center'>
-              <Icon name='star' /> Log-in to your account
-            </Header>
-            <Form size='large'>
-              <Segment stacked>
-                <Form.Input 
-                  disabled={loggedIn}
-                  onChange={this.handleInputChange}
-                  fluid icon='user' 
-                  iconPosition='left' 
-                  placeholder='E-mail address' 
-                  name='userEmail'
-                  value={this.state.userEmail}
-                />
-                <Form.Input
-                  disabled={loggedIn}
-                  onChange={this.handleInputChange}
-                  fluid
-                  icon='lock'
-                  iconPosition='left'
-                  placeholder='Password'
-                  type='password'
-                  name='userPassword'
-                  value={this.state.userPassword}
-                />
+      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+        <Grid.Column style={{ maxWidth: 450, margin: '2%' }}>
+          <Header as='h2' color='orange' textAlign='center'>
+            <Icon name='star' /> Log-in to your account
+          </Header>
+          <Form size='large'>
+            <Segment stacked>
+              <Form.Input 
+                onChange={this.handleInputChange}
+                fluid icon='user' 
+                iconPosition='left' 
+                placeholder='E-mail address' 
+                name='userEmail'
+                value={this.state.userEmail}
+              />
+              <Form.Input
+                onChange={this.handleInputChange}
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='Password'
+                type='password'
+                name='userPassword'
+                value={this.state.userPassword}
+              />
 
-                <Button 
-                  disabled={loggedIn} 
-                  onClick={this.handleFormSubmit} 
-                  color='orange' 
-                  fluid size='large'>
-                  Login
-                </Button>
-              </Segment>
-            </Form>
-            <Message>
-              Don't have an account? <Link to='/register'>Register</Link>
-            </Message>
-          </Grid.Column>
-        </Grid>
-      </React.Fragment>
+              <Button 
+                onClick={this.handleFormSubmit} 
+                color='orange' 
+                fluid size='large'>
+                Login
+              </Button>
+            </Segment>
+          </Form>
+          <Message>
+            Don't have an account? <Link to='/register'>Register</Link>
+          </Message>
+        </Grid.Column>
+      </Grid>
     )
   }
 }

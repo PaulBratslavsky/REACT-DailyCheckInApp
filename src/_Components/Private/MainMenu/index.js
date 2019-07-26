@@ -9,7 +9,7 @@ import { Header, Icon, Image, Menu, Label } from 'semantic-ui-react';
 //IMPORT REDUX
 import { connect } from 'react-redux';
 
-import { toggleAddCard } from './../../../_Redux/A&R/combine';
+import { toggleAddCard } from './../../../_Redux/Reducers/menuReducer';
  
 
  class MainMenu extends Component {
@@ -18,6 +18,7 @@ import { toggleAddCard } from './../../../_Redux/A&R/combine';
     displayName: localStorage.getItem('userName'),
     photoURL: localStorage.getItem('photoUrl'),
   }
+
   
   showCreateCard = () => {
     this.props.toggleAddCard();
@@ -29,7 +30,7 @@ import { toggleAddCard } from './../../../_Redux/A&R/combine';
   }
 
   render() {
-    console.log(this.props.showCreateCard);
+    // console.log(this.props.user.currentUser.displayName, 'Where is this')   
     return (
       <div style={{position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 300, background: '#e5e5e5'}}>
           
