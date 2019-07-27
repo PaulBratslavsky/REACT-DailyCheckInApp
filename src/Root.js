@@ -19,16 +19,13 @@ class Root extends Component {
 
   authListener() {
     fireDB.auth().onAuthStateChanged((user) => {
-      console.log(user);
+
       if (user) {
         this.props.setUser(user);
-        localStorage.setItem('userName', user.displayName);
-        localStorage.setItem('photoUrl', user.photoURL);
-        localStorage.setItem('userUid', user.uid);
+        localStorage.setItem('userName',  user.displayName);
+        localStorage.setItem('photoUrl',  user.photoURL);
+        localStorage.setItem('userUid',   user.uid);
         this.props.history.push('/private');    
-
-
-        console.log('LOGGEDIN')
       } else {
         this.props.clearUser();
         localStorage.removeItem('userName');
@@ -36,6 +33,7 @@ class Root extends Component {
         localStorage.removeItem('userUid')
         this.props.history.push('/');  
       }
+
     });
   }
 
@@ -56,8 +54,6 @@ class Root extends Component {
   }
   
 }
-
-
 
 export default connect(null, { setUser, clearUser })(Root);
 

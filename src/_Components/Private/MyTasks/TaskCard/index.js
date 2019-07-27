@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Card, Image, Label, Progress} from 'semantic-ui-react';
 import Timmer from '../../Timmer';
+import { connect } from 'react-redux';
+import { removeData } from '../../../../_Redux/Reducers/dataReducer';
 
 
 class TaskCard extends Component {
@@ -9,6 +11,12 @@ class TaskCard extends Component {
     if (complete) {
       return {background: color};
     } 
+  }
+
+  deleteTaskFromDatabase = (userUID, taskUID) => {
+    console.log(userUID, taskUID, 'delet clicked');
+    const sectionName = 'tasks';
+    this.props.removeData(userUID, taskUID, sectionName);
   }
 
    // CALCULATE TIME PASSED
@@ -68,7 +76,7 @@ class TaskCard extends Component {
             Complete
           </Button>} 
           
-          <Button onClick={ () => this.props.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) }  color='red'>
+          <Button onClick={ () =>  this.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) }  color='red'>
             Delete
           </Button>
         </div>
@@ -78,4 +86,4 @@ class TaskCard extends Component {
   }
 }
 
-export default TaskCard;
+export default connect(null, {removeData})(TaskCard);

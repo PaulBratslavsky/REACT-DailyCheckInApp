@@ -15,21 +15,21 @@ class DisplayTasks extends Component {
 
 
   displayTasks = (tasks) => {
-    return tasks.map( ( task, index )  => {
-      console.log(task.content.taskUID);
-      return(
-        <TaskCard 
 
-        task={task} 
-        key={task.content.taskUID} 
-        deleteTaskFromDatabase={this.deleteTaskFromDatabase}
-        completeTask={this.completeTask}
-    
-      /> 
-      );
+    if (tasks.length > 0 ) {
+      return tasks.map( ( task )  => {
 
-    }
+        return(
+          <TaskCard
+            task={task} 
+            key={task.content.taskUID} 
+            deleteTaskFromDatabase={this.deleteTaskFromDatabase}
+            completeTask={this.completeTask}  
+          /> 
+        );
+      }
     );
+    }
   }
 
   render() {
@@ -45,7 +45,7 @@ class DisplayTasks extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.data, 'fdf');
+  console.log(state, 'fdf');
   return {
     tasks: state.data
   }
