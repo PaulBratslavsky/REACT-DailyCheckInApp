@@ -1,34 +1,31 @@
 import * as actionTypes from '../types';
 import { fireDB } from '../../_Firebase/firebase';
 
-// ACTION HANDLE DATA 
+// ACTION FETCH DATA 
 export const fetchData = (userUid, sectionName) => async (dispatch) => {
 
   let myArray = [];
 
-  await fireDB.database().ref(sectionName).child(userUid).once('value', (snap) => {
-    
+  await fireDB.database().ref(sectionName).child(userUid).on('value', (snap) => {
+    // CHECK IF OBJECT IS EMPTY
+    const isEmpty = (obj) => {
+    for(let key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+    }
+    return true;
+    }
+
     const myObject = snap.val();
-    myArray = Object.keys(myObject).map(i => myObject[i]);
-    dispatch({ type: actionTypes.FETCH_TASKS, payload: myArray })
+
+    if (!isEmpty(myObject) ) {
+      myArray = Object.keys(myObject).map(i => myObject[i]);
+      dispatch({ type: actionTypes.FETCH_TASKS, payload: myArray })
+    }
+    
 
   }) 
 }
-/*
-
-updateStateOnRemove = (itemRemoved) => {
-  const oldArray = this.state.delayGratTasks;
-
-  const newArray = oldArray.filter( tasks => {
-    if ( tasks.content.taskUID !== itemRemoved ) {
-      return tasks;
-    }
-  })
-  console.log(newArray, 'FROM UPDATE ON REMOVE')
-  this.setState({delayGratTasks: newArray })
-}
-
-*/
 
 // ACTION REMOVE TASK
 export const removeData = (userUID, taskUID, sectionName) => async ( dispatch, getState ) => {
@@ -53,7 +50,7 @@ export const removeData = (userUID, taskUID, sectionName) => async ( dispatch, g
 export const addData = (data, userUid, sectionName) => async ( dispatch, getState ) => {
   console.log(getState.data);
   await fireDB.database().ref(sectionName).child(userUid).push().set(data);
-  dispatch({ type: actionTypes.ADD_TASK, payload: [ ...getState().data, data ]})
+  dispatch({ type: actionTypes.ADD_TASK, payload: [ ...getState().data ]})
   console.log('Data saved');
 }
 

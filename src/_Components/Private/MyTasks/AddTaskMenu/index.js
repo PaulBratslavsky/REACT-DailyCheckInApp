@@ -90,8 +90,6 @@ class AddTaskMenu extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state, "how is mu state");
-}
 
-export default connect(mapStateToProps, { addData })(AddTaskMenu);
+
+export default connect(null, { addData })(AddTaskMenu);

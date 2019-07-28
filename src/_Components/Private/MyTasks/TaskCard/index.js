@@ -3,9 +3,20 @@ import { Button, Card, Image, Label, Progress} from 'semantic-ui-react';
 import Timmer from '../../Timmer';
 import { connect } from 'react-redux';
 import { removeData } from '../../../../_Redux/Reducers/dataReducer';
+import { markCardComplete, restartCardTask } from '../../../../_Redux/Reducers/cardReducer';
 
 
 class TaskCard extends Component {
+
+  completeTask = (userUID, taskUID) => {
+    const sectionName = 'tasks';
+    this.props.markCardComplete(userUID, taskUID, sectionName);
+  }
+
+  restartTask = (userUID, taskUID) => {
+    const sectionName = 'tasks';
+    this.props.restartCardTask(userUID, taskUID, sectionName);
+  }
   
   changeColorOnComplete = (complete, color) => {
     if (complete) {
@@ -14,7 +25,6 @@ class TaskCard extends Component {
   }
 
   deleteTaskFromDatabase = (userUID, taskUID) => {
-    console.log(userUID, taskUID, 'delet clicked');
     const sectionName = 'tasks';
     this.props.removeData(userUID, taskUID, sectionName);
   }
@@ -54,30 +64,38 @@ class TaskCard extends Component {
     const startTime = new Date(task.content.startTime);
     const stopTime = new Date(task.content.stopTime);
 
-    console.log(task, "ERWEAWER")
+    console.log(task.content.startTime, "TIME");
+
     return (
       <Card key={index} centered style={this.changeColorOnComplete(task.content.completed, '#efa037')}>
       <Card.Content>
+        <Card.Header>
         { !task.content.completed 
             ? 
-          <Timmer startTime={this.props.task.content.startTime} />
+          <Timmer startTime={task.content.startTime} />
             : 
           this.timePassed(startTime, stopTime)
         }
+          
+        </Card.Header>
+        
         <Card.Meta>{task.user.displayName}<Image floated='right' size='mini' src={task.user.displayPhoto} avatar/>
-</Card.Meta>
+        </Card.Meta>
+
         <Card.Description>
         <strong>Task: </strong>{task.content.taskName}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <div className='ui two buttons'>
-        { !task.content.completed &&  <Button onClick = { () => {this.props.completeTask(task.user.userUID, task.content.taskUID)} }  color='green'>
-            Complete
+        
+        
+        <div className='ui three buttons'>
+        <Button onClick={ () =>  this.restartTask(task.user.userUID, task.content.taskUID) }  color='yellow' icon='redo'>
+        </Button>
+        { !task.content.completed &&  <Button onClick = { () => {this.completeTask(task.user.userUID, task.content.taskUID)} }  color='green' icon='check'>
           </Button>} 
           
-          <Button onClick={ () =>  this.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) }  color='red'>
-            Delete
+          <Button onClick={ () =>  this.deleteTaskFromDatabase(task.user.userUID, task.content.taskUID) }  color='red' icon='remove'>
           </Button>
         </div>
       </Card.Content>
@@ -86,4 +104,11 @@ class TaskCard extends Component {
   }
 }
 
-export default connect(null, {removeData})(TaskCard);
+const mapStateToProps = (state) => {
+  console.log(state.card, 'from state');
+  return {
+    card: state
+  }
+}
+
+export default connect(mapStateToProps, {removeData, markCardComplete, restartCardTask })(TaskCard);
