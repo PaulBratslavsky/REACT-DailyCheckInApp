@@ -39,8 +39,9 @@ export const removeData = (userUID, taskUID, sectionName) => async ( dispatch, g
     }); 
 
     const newArray = getState().data.filter( tasks =>  tasks.content.taskUID !== taskUID );
-    dispatch({ type: actionTypes.ADD_TASK, payload: newArray })
-    console.log('Data Removed');
+
+    dispatch({ type: actionTypes.FETCH_TASKS, payload: newArray });
+
 
   }); 
 }
@@ -50,7 +51,7 @@ export const removeData = (userUID, taskUID, sectionName) => async ( dispatch, g
 export const addData = (data, userUid, sectionName) => async ( dispatch, getState ) => {
   console.log(getState.data);
   await fireDB.database().ref(sectionName).child(userUid).push().set(data);
-  dispatch({ type: actionTypes.ADD_TASK, payload: [ ...getState().data ]})
+  dispatch({ type: actionTypes.ADD_TASK, payload: [ ...getState().data]})
   console.log('Data saved');
 }
 
